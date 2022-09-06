@@ -1,0 +1,52 @@
+{"properties": [
+  {
+    "name": "config.value1",
+    "type": "java.lang.String",
+    "description": "A description for 'config.value1'"
+  },
+  {
+    "name": "config.str",
+    "type": "java.lang.String",
+    "description": "A description for 'config.str'"
+  },
+  {
+    "name": "config.value2",
+    "type": "java.lang.String",
+    "description": "A description for 'config.value2'"
+  },
+  {
+    "name": "cashback.bonus",
+    "type": "java.lang.String",
+    "description": "A description for 'cashback.bonus'"
+  },
+  {
+    "name": "cashback.cashbackupto",
+    "type": "java.lang.String",
+    "description": "A description for 'cashback.cashbackupto'"
+  },
+  {
+    "name": "cashback.expirydate",
+    "type": "java.lang.String",
+    "description": "A description for 'cashback.expirydate'"
+  },
+  {
+    "name": "cashback.fromdate",
+    "type": "java.lang.String",
+    "description": "A description for 'cashback.fromdate'"
+  },
+  {
+    "name": "cashback.todate",
+    "type": "java.lang.String",
+    "description": "A description for 'cashback.todate'"
+  },
+  {
+    "name": "CashBackDates.cashback.todate",
+    "type": "java.lang.String",
+    "description": "A description for 'CashBackDates.cashback.todate'"
+  },
+  {
+    "name": "aDateFormat",
+    "type": "java.lang.String",
+    "description": "A description for 'aDateFormat'"
+  }
+]}
