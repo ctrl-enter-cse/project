@@ -5,10 +5,11 @@ import java.util.Date;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
+
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.ManyToOne;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import org.hibernate.annotations.CreationTimestamp;
@@ -37,14 +38,7 @@ public class orders {
 	
 	@Column(name="ITEMNAME")
 	private  String itemname;
-	
-	public String getCreationBy() {
-		return creationBy;
-	}
 
-	public void setCreationBy(String creationBy) {
-		this.creationBy = creationBy;
-	}
 
 	@Column(name="DATE_")
 	private  Date date;
@@ -52,11 +46,11 @@ public class orders {
 	@Column(name="AMOUNT")
 	private double amount;
 	
-	@OneToOne(cascade = CascadeType.ALL,fetch = FetchType.EAGER)
+	@ManyToOne(cascade = CascadeType.ALL)
 	private Users userid;
 	
-	@OneToOne(cascade = CascadeType.ALL ,fetch = FetchType.EAGER)
-	private Transactions TRANSACTIONS_ID;
+	@OneToOne(cascade = CascadeType.ALL)
+	private Transactions TRANSACTIONS;
 	
 	@Column(name="No_Of_Item")
 	private int no_of_item;
@@ -117,12 +111,12 @@ public class orders {
 		this.userid = userid;
 	}
 
-	public Transactions getTRANSACTIONS_ID() {
-		return TRANSACTIONS_ID;
+	public Transactions getTRANSACTIONS() {
+		return TRANSACTIONS;
 	}
 
-	public void setTRANSACTIONS_ID(Transactions tRANSACTIONS_ID) {
-		TRANSACTIONS_ID = tRANSACTIONS_ID;
+	public void setTRANSACTIONS_ID(Transactions tRANSACTIONS) {
+		TRANSACTIONS= tRANSACTIONS;
 	}
 
 	public int getNo_of_item() {
@@ -133,4 +127,12 @@ public class orders {
 		this.no_of_item = no_of_item;
 	}
 	
+	
+	public String getCreationBy() {
+		return creationBy;
+	}
+
+	public void setCreationBy(String creationBy) {
+		this.creationBy = creationBy;
+	}
 }

@@ -1,5 +1,7 @@
 package com.techtree.ttshoppingcart.service.impl;
 
+import java.io.ByteArrayInputStream;
+import java.io.ByteArrayOutputStream;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -7,6 +9,14 @@ import java.util.Date;
 import java.util.Iterator;
 import java.util.List;
 
+import org.apache.poi.ss.usermodel.Cell;
+import org.apache.poi.ss.usermodel.CellStyle;
+import org.apache.poi.ss.usermodel.Font;
+import org.apache.poi.ss.usermodel.IndexedColors;
+import org.apache.poi.ss.usermodel.Row;
+import org.apache.poi.ss.usermodel.Sheet;
+import org.apache.poi.ss.usermodel.Workbook;
+import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 import org.json.simple.parser.ParseException;
@@ -59,7 +69,14 @@ public class serviceimpl implements service {
 	
 	@Autowired
 	private Repository userrepo;
-
+	
+	@Autowired
+	OrderRepo orderRepo;
+	
+	@Autowired
+	TranscationRepo transrepo;
+	
+	
 	@Override
 	public ResponseEntity<Object> get() {
 		JSONObject json = new JSONObject();
@@ -115,6 +132,8 @@ public class serviceimpl implements service {
 					walletrep.setExpiryCashbackDateTime(StrCashBackDate);
 					walletrep.setAmountType(data[7].toString());
 					wallletresponse.add(walletrep);
+					
+					
 				}
 				json.put("data", wallletresponse);
 				return new ResponseEntity<Object>(json, HttpStatus.OK);
@@ -211,43 +230,78 @@ public class serviceimpl implements service {
 		
 	}
 
-	@Autowired
-	OrderRepo orderRepo;
-	
-	@Autowired
-	TranscationRepo transrepo;
 	
 	
 	@Override
 	public ResponseEntity<Object> placeOrder(OrderBean data) {	
 		try {
 		orders order = new orders();
+		order.setID(data.getID());
 		order.setcreationBy("admin");
 		order.setModifiedBy("admin");
 		order.setItemname(data.getItemname());
 		order.setDate(Calendar.getInstance().getTime());
-		order.setUserid(userrepo.getById((long)data.getUserid()));
+		order.setUserid(userrepo.getById((Integer)data.getUserid()));
 		order.setAmount(data.getAmount());
 		order.setNo_of_item(data.getNo_of_item());
 		
 		Transactions transcantion = new Transactions();
+		transcantion.setId(22);
 		transcantion.setBILL_AMOUNT(CBpercent);
 		transcantion.setDISCOUNT_AMOUNT(CBpercent);
 		transcantion.setPAID_AMOUNT(CBpercent);
 		transcantion.setT_DATE(Calendar.getInstance().getTime());
 		transcantion.setTRANSCATION_STATUS(data.getTRANSCATION_STATUS());
-		
-		
 		order.setTRANSACTIONS_ID(transcantion);
 		
 		return new ResponseEntity<Object>(orderRepo.save(order), HttpStatus.OK);
 		}catch (Exception e) {
 			e.printStackTrace();
 		}
-		return null;
+		return new ResponseEntity<Object>(HttpStatus.BAD_REQUEST);
 	}
 
 	
-	
-	
+	public  List<Object[]> gettranscation(){
+		
+//		String [] columns ={"Roll", "Name","Address"};
+//		try(
+//		Workbook workbook = new XSSFWorkbook();
+//		ByteArrayOutputStream out = new ByteArrayOutputStream();
+//		){
+//		Sheet sheet= workbook.createSheet("Students");
+//		Font headerFont = workbook.createFont();
+//		headerFont.setBold(true);
+//		headerFont.setColor(IndexedColors.BLUE.getIndex());
+//		CellStyle headerCellStyle = workbook.createCellStyle();
+//		headerCellStyle.setFont(headerFont);
+//		// Row for Header -->
+//		Row headerRow =sheet.createRow(0);
+//		// Header
+//		
+//		
+//		for(int col=0; col<columns.length; col ++)
+//		{
+//		Cell cell =headerRow.createCell(col);
+//		cell.setCellValue(columns[col]);
+//		cell.setCellStyle(headerCellStyle);
+//		}
+//		int rowidx=1;
+//		List<Object[]> object =transrepo.transcationList();
+//		for( Object[] obj:object) {
+//			Row row = sheet.createRow(rowidx++);
+//			row.createCell(0).setCellValue(obj[0].toString());
+//			row.createCell(1).setCellValue(obj[1].toString());
+//			row.createCell(2).setCellValue(obj[2].toString());
+//			row.createCell(3).setCellValue(obj[3].toString());
+//			row.createCell(4).setCellValue(obj[4].toString());
+//			workbook.write(out);
+//			
+//			return new ByteArrayInputStream(out.toByteArray());
+//		}
+//		
+		
+		return transrepo.transcationList();	
+	}
+
 }

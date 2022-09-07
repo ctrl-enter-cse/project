@@ -7,8 +7,6 @@ import com.techtree.ttshoppingcart.model.Users;
 
 
 @org.springframework.stereotype.Repository
-public interface Repository extends  JpaRepository<Users,Long> {
+public interface Repository extends  JpaRepository<Users,Integer> {
 	
-
-
 }

@@ -48,5 +48,4 @@ public interface walletsRepository extends  JpaRepository<Wallets,Long>{
 	List<Object[]> findbyamounttype(String amounttype);
 	
 	
-	
 }

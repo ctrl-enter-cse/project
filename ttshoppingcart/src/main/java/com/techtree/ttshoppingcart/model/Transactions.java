@@ -2,6 +2,7 @@ package com.techtree.ttshoppingcart.model;
 
 import java.util.Date;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
@@ -17,12 +18,13 @@ import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 import org.springframework.format.annotation.DateTimeFormat;
 
+
 @Entity
 @Table(name="transactions")
 public class Transactions {
 
 	@Id
-	@GeneratedValue(strategy=GenerationType.IDENTITY)
+	@GeneratedValue(strategy=GenerationType.AUTO)
 	@Column(name="id")
 	private int id;
 	@CreationTimestamp
@@ -35,12 +37,10 @@ public class Transactions {
 	@DateTimeFormat(pattern="yyyy-mm-dd HH:MM:SS")
 	private Date T_DATE;
 	
-	@OneToOne(fetch = FetchType.EAGER)
-	private orders order_id;
 	
-	enum statustype{
-		canceled,confimerd,pending,inisitated,Refunded,Failed
-	}
+	
+//	@OneToOne(cascade = CascadeType.ALL)
+//	private orders order_id;
 	
 	private double  BILL_AMOUNT;
 	private double  DISCOUNT_AMOUNT;
@@ -48,9 +48,10 @@ public class Transactions {
 	
 	@Enumerated(EnumType.STRING)
 	private statustype TRANSCATION_STATUS;
+		
+	@ManyToOne(cascade = CascadeType.ALL,fetch = FetchType.EAGER)
+	private Users USER;
 	
-	@ManyToOne(fetch = FetchType.EAGER)
-	private Users USER_ID;
 	public int getId() {
 		return id;
 	}
@@ -63,17 +64,17 @@ public class Transactions {
 	public void setT_DATE(Date t_DATE) {
 		T_DATE = t_DATE;
 	}
-	public orders getOrder_id() {
-		return order_id;
-	}
-	public void setOrder_id(orders order_id) {
-		this.order_id = order_id;
-	}
+//	public orders getOrder_id() {
+//		return order_id;
+//	}
+//	public void setOrder_id(orders order_id) {
+//		this.order_id = order_id;
+//	}
 	public statustype getTRANSCATION_STATUS() {
 		return TRANSCATION_STATUS;
 	}
-	public void setTRANSCATION_STATUS(statustype tRANSCATION_STATUS) {
-		TRANSCATION_STATUS = tRANSCATION_STATUS;
+	public void setTRANSCATION_STATUS(statustype statustype) {
+		TRANSCATION_STATUS = statustype;
 	}
 	public String getCREATION_BY() {
 		return CREATION_BY;
@@ -106,12 +107,13 @@ public class Transactions {
 	public void setPAID_AMOUNT(double pAID_AMOUNT) {
 		PAID_AMOUNT = pAID_AMOUNT;
 	}
+//	public Users getUSER() {
+//		return USER;
+//	}
+//	public void setUSER(Users uSER) {
+//		USER = uSER;
+//	}
 	
-	public Users getUSER_ID() {
-		return USER_ID;
-	}
-	public void setUSER_ID(Users uSER_ID) {
-		USER_ID = uSER_ID;
-	}
+
 	
 }

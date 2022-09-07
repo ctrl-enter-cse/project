@@ -1,19 +1,23 @@
 package com.techtree.ttshoppingcart.model;
 
 import java.util.Date;
+import java.util.List;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.OneToOne;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
+
 
 @Entity
 @Table(name="users")
@@ -38,21 +42,50 @@ public class Users {
 	@Column(name="STATUS_")
 	private String UserSTATUS;
 	
-	@OneToOne(cascade = CascadeType.ALL,fetch = FetchType.LAZY)
-	private UserDeatails userdetail;
+	
+//	@JsonIgnore
+//	@OneToOne(cascade = CascadeType.ALL)
+//	private UserDeatails userdetail;
+//	
+	
+	@JsonIgnore
+	@OneToMany(mappedBy ="USER",cascade = CascadeType.ALL)
+	private List<Transactions> transactions;
+	
+	@JsonIgnore
+	@OneToMany(mappedBy = "userid",cascade = CascadeType.ALL)
+	private List<orders> order;
 	
 	public int getId() {
 		return id;
 	}
+	
+	public List<orders> getOrder() {
+		return order;
+	}
+
+	public void setOrder(List<orders> order) {
+		this.order = order;
+	}
+
+	public List<Transactions> getTransactions() {
+		return transactions;
+	}
+
+
+	public void setTransactions(List<Transactions> transactions) {
+		this.transactions = transactions;
+	}
+
 	public void setId(int id) {
 		this.id = id;
 	}
-	public UserDeatails getUserdetail() {
-		return userdetail;
-	}
-	public void setUserdetail(UserDeatails userdetail) {
-		this.userdetail = userdetail;
-	}
+//	public UserDeatails getUserdetail() {
+//		return userdetail;
+//	}
+//	public void setUserdetail(UserDeatails userdetail) {
+//		this.userdetail = userdetail;
+//	}
 	public String getCREATION_BY() {
 		return CREATION_BY;
 	}
